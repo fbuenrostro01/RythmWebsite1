@@ -1,0 +1,322 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RhythmHero</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+    <div id="display-current-user">
+        Current User: {{ request.user.username }}
+    </div>
+    <div id="display-current-user-score">
+        {% if user_score %}
+            Score: {{ user_score.score }}
+        {% else %}
+            No score
+        {% endif %}
+    </div>
+
+   
+ 
+
+    <span><a href="{% url 'log_out_page' %}" id="login-link">Logout</a></span>
+    <span><a href="{% url 'high_scores_page' %}" id="high-score-link">View HighScores</a></span>
+
+    <div class="player">
+        <audio id="mainAudioPlayer" controls>
+            <source src="{% static 'karaokeshort.mp3' %}" type="audio/mp3">
+        </audio>
+
+        <form id="scoreForm" method="POST" action="">
+            {% csrf_token %}
+            <input type="hidden" name="test_score" value="1">
+        </form>
+
+        <div class="button-row">
+            <button class="big-button" id="playButton">Play Game</button>
+           
+        </div>
+    <div id="display-current-user-score">
+        {% if user_score %}
+            Score: {{ user_score.score }}
+        {% else %}
+            No score
+        {% endif %}
+    </div>
+        <div class="button-row">
+            <button class="big-button-vocals" id="work_it">Work it =[Q]</button>
+            <button class="big-button-vocals" id="make_it">Make it =[W]</button>
+            <button class="big-button-vocals" id="do_it">Do it =[E]</button>
+            <button class="big-button-vocals" id="makes_us">Makes us =[R]</button>
+
+            <button class="big-button-vocals" id="harder">Harder =[U]</button>
+            <button class="big-button-vocals" id="better">Better =[I]</button>
+            <button class="big-button-vocals" id="faster">Faster =[O]</button>
+            <button class="big-button-vocals" id="stronger">Stronger =[P]</button>
+
+            <button class="big-button-vocals" id="more_than">More than =[A]</button>
+            <button class="big-button-vocals" id="hour">Hour =[S]</button>
+            <button class="big-button-vocals" id="our">Our =[D]</button>
+            <button class="big-button-vocals" id="never">Never =[F]</button>
+
+            <button class="big-button-vocals" id="ever">Ever =[J]</button>
+            <button class="big-button-vocals" id="after">After =[K]</button>
+            <button class="big-button-vocals" id="work_is">Work is =[L]</button>
+            <button class="big-button-vocals" id="over">Over =[;]</button>
+        </div>
+    </div>
+
+    
+   
+    <script>
+        
+
+
+        
+        const playButton=document.getElementById('playButton');
+        const pauseButton=document.getElementById('pauseButton');
+        
+        const workitButton=document.getElementById("work_it")
+        const makeitButton=document.getElementById("make_it")
+        const doitButton=document.getElementById("do_it")
+        const makeusButton=document.getElementById("makes_us")
+
+        const harderButton=document.getElementById("harder")
+        const betterButton=document.getElementById("better")
+        const fasterButton=document.getElementById("faster")
+        const strongerButton=document.getElementById("stronger")
+
+        const morethanButton=document.getElementById("more_than")
+        const hourButton=document.getElementById("hour")
+        const ourButton=document.getElementById("our")
+        const neverButton=document.getElementById("never")
+
+        const everButton=document.getElementById("ever")
+        const afterButton=document.getElementById("after")
+        const workisButton=document.getElementById("work_is")
+        const overButton=document.getElementById("over")
+        const mainAudioPlayer = document.getElementById('mainAudioPlayer');
+        const scoreForm = document.getElementById('scoreForm');
+
+        
+        function playSound(soundFile) {
+        
+            const soundPlayer=new Audio(soundFile);  
+            soundPlayer.play();  
+        }
+
+     
+        playButton.addEventListener('click', () => {
+        
+            mainAudioPlayer.play();
+      
+            setTimeout(() => {
+              console.log('55 seconds elapsed – submitting form.');
+              scoreForm.submit();
+            }, 55000);
+        });
+            
+       
+       
+
+
+        // at some point ill have to make a file script in a foler if it gets too long too
+        // plays song but no player just spits it out 
+       
+
+        workitButton.addEventListener('click', () => {
+            playSound('{% static "work_it.mp3" %}'); 
+            console.log("test work it butoon")
+        });
+
+        makeitButton.addEventListener('click', () => {
+            playSound('{% static "make_it.mp3" %}'); 
+            console.log("test make it")
+
+        });
+
+        doitButton.addEventListener('click', () => {
+            playSound('{% static "do_it.mp3" %}'); 
+            console.log("test do it")
+        });
+        makeusButton.addEventListener('click', () => {
+            playSound('{% static "makes_us.mp3" %}'); 
+            console.log("test make us")
+        });
+
+
+        harderButton.addEventListener('click', () => {
+            playSound('{% static "harder.mp3" %}'); 
+            console.log("test harder button")
+        });
+
+        betterButton.addEventListener('click', () => {
+            playSound('{% static "better.mp3" %}'); 
+            console.log("test better button")
+        });
+
+        fasterButton.addEventListener('click', () => {
+            playSound('{% static "faster.mp3" %}'); 
+            console.log("test faster button")
+        });
+
+        strongerButton.addEventListener('click', () => {
+            playSound('{% static "stronger.mp3" %}'); 
+            console.log("test strong button")
+        });
+
+
+
+
+        morethanButton.addEventListener('click', () => {
+            playSound('{% static "more_than.mp3" %}'); 
+            console.log("test more than")
+        });
+
+        hourButton.addEventListener('click', () => {
+            playSound('{% static "hour.mp3" %}'); 
+            console.log("test hour button")
+        });
+
+        ourButton.addEventListener('click', () => {
+            playSound('{% static "our.mp3" %}'); 
+            console.log("test hour button")
+        });
+
+        neverButton.addEventListener('click', () => {
+            playSound('{% static "never.mp3" %}'); 
+            console.log("test never button")
+        });
+
+
+
+
+        everButton.addEventListener('click', () => {
+            playSound('{% static "ever.mp3" %}'); 
+            console.log("test ever button")
+        });
+
+        afterButton.addEventListener('click', () => {
+            playSound('{% static "after.mp3" %}'); 
+            console.log("test after button")
+        });
+
+        workisButton.addEventListener('click', () => {
+            playSound('{% static "work_is.mp3" %}'); 
+            console.log("test work is")
+        });
+
+        overButton.addEventListener('click', () => {
+            playSound('{% static "over.mp3" %}'); 
+            console.log("test make us")
+        });
+
+// if i press two kesy at teh same time i get this error on the console but doens tseem to bork the program
+//Uncaught (in promise) AbortError: The play() request was interrupted by a new load request. https://goo.gl/LdLk22
+
+        document.addEventListener('keydown', function(event) {
+            let button;
+            switch(event.key) {
+                case 'q':
+                    button=document.getElementById('work_it');
+                    playSound('{% static "work_it.mp3" %}');
+                    console.log('testing if they clikc for work it');
+                    break;
+                case 'w':
+                    button=document.getElementById('make_it');
+                    playSound('{% static "make_it.mp3" %}');
+                    console.log('test for make it');
+                    break;
+                case 'e':
+                    button=document.getElementById('do_it');
+                    playSound('{% static "do_it.mp3" %}');
+                    break;
+                case 'r':
+                    button=document.getElementById('makes_us');
+                    playSound('{% static "makes_us.mp3" %}');
+                 
+                    break;
+                case 'u':
+                    button=document.getElementById('harder');
+                    playSound('{% static "harder.mp3" %}');
+                   
+                    break;
+                case 'i':
+                    button=document.getElementById('better');
+                    playSound('{% static "better.mp3" %}');
+                  
+                    break;
+                case 'o':
+                    button=document.getElementById('faster');
+                    playSound('{% static "faster.mp3" %}');
+                   
+                    break;
+                case 'p':
+                    button=document.getElementById('stronger');
+                    playSound('{% static "stronger.mp3" %}');
+                  
+                    break;
+                case 'a':
+                    button=document.getElementById('more_than');
+                    playSound('{% static "more_than.mp3" %}');
+                  
+                    break;
+                case 's':
+                    button=document.getElementById('hour');
+                    playSound('{% static "hour.mp3" %}');
+                    console.log('hour test ');
+                    break;
+                case 'd':
+                    button=document.getElementById('our');
+                    playSound('{% static "our.mp3" %}');
+                  
+                    break;
+                case 'f':
+                    button=document.getElementById('never');
+                    playSound('{% static "never.mp3" %}');
+                   
+                    break;
+                case 'j':
+                    button=document.getElementById('ever');
+                    playSound('{% static "ever.mp3" %}');
+                 
+                    break;
+                case 'k':
+                    button=document.getElementById('after');
+                    playSound('{% static "after.mp3" %}');
+                  
+                    break;
+                case 'l':
+                    button=document.getElementById('work_is');
+                    playSound('{% static "work_is.mp3" %}');
+                
+                    break;
+                case ';':
+                    button=document.getElementById('over');
+                    playSound('{% static "over.mp3" %}');
+                    console.log('testing for over');
+                    break;
+               
+            }
+            if (button) {
+                // this is so they see it being highlighted
+                button.classList.add('pressed');
+               //how lonig i wnat it highlihight
+                setTimeout(() => {
+                    button.classList.remove('pressed');
+                }, 200);
+            }
+        });
+        
+        
+        
+      
+
+    </script>
+
+</body>
+</html>

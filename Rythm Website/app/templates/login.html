@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body> 
+
+    <div class="user_card">
+        <h3>LOGIN</h3>
+        <div class="form_container">
+            <form method="POST" action="{% url 'login_page' %}">
+                {% csrf_token %}
+                <!--csrf tooken is neede in order to send the user info-->
+                <input type="text" name="username" id="id_username" placeholder="USERNAME">
+                <!-- rememver to check line 20 about the name equald password thing works but i should have named it differly -->
+                <input type="password" name="password" id="id_password1" placeholder="PASSWORD">
+                <input class="register_btn" type="submit" value="LOG IN">
+            </form>
+              
+            <a href="{% url 'register_page' %}" class="register">NEED TO REGISTER?</a>
+            
+        </div>
+
+        {% for message in messages %}
+            <p id="messages">{{ message }}</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

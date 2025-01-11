@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body> 
+
+    <div class="user_card">
+        <h3>REGISTER ACCOUNT</h3>
+        <div class="form_container">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="text" name="username" id="id_username" placeholder="USERNAME">
+                <input type="email" name="email" id="id_email" placeholder="EMAIL">
+                <input type="password" name="password1" id="id_password1" placeholder="PASSWORD">
+                <input type="password" name="password2" id="id_password2" placeholder="CONFIRM PASSWORD">
+                <input class="login_btn" type="submit" value="Register">
+            </form>
+            <a href="{% url 'login_page' %}" class="register">ALREADY HAVE AN ACCOUNT? LOG IN</a>
+        </div>
+
+        
+        {% if form.errors %}
+            <div class="error-messages">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

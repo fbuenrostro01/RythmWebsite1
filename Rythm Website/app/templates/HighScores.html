@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>High Scores</title>
+  <style>
+    /* keeping it seperate keped messing up in i fput in main css */
+    body {
+      margin: 20px;
+      font-family: Arial, sans-serif;
+      background-color:rgb(67, 131, 191);
+      color: #333;
+    }
+
+    #display-current-user {
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    /* Container for the user’s “Delete all high scores” form */
+    .delete-scores-container {
+      background-color: #ffe9e9;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .delete-scores-container h2 {
+      margin-top: 0;
+    }
+    .delete-scores-container form {
+      margin: 0;
+    }
+    .delete-scores-container button {
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .delete-scores-container button:hover {
+      background-color: #c0392b;
+    }
+
+    /* Messages list styling */
+    ul.message-list {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 20px 0;
+    }
+    ul.message-list li {
+      background-color: #fff6bd;
+      padding: 8px 12px;
+      margin-bottom: 5px;
+      border-radius: 4px;
+    }
+
+    /* All High Scores container */
+    #all-high-scores {
+      margin-bottom: 20px;
+    }
+    #all-high-scores h2 {
+      margin-top: 0;
+    }
+    #all-high-scores ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #all-high-scores li {
+      background-color: #ffffff;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Admin Delete container */
+    #admin-delete-user-scores {
+      background-color: #e0f7fa;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    #admin-delete-user-scores h2 {
+      margin-top: 0;
+    }
+    #admin-delete-user-scores form {
+      margin: 0;
+    }
+    #admin-delete-user-scores label {
+      margin-right: 10px;
+    }
+    #admin-delete-user-scores select {
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    #admin-delete-user-scores button {
+      background-color: #0288d1;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #admin-delete-user-scores button:hover {
+      background-color: #0277bd;
+    }
+
+    /* Footer navigation links (Logout, Home) */
+    .nav-links {
+      margin-top: 20px;
+    }
+    .nav-links a {
+      margin-right: 15px;
+      text-decoration: none;
+      background-color: #ddd;
+      color: #333;
+      padding: 8px 14px;
+      border-radius: 4px;
+    }
+    .nav-links a:hover {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div id="display-current-user">
+    Current User: {{ request.user.username }}
+  </div>
+
+  
+  {% if not request.user.is_superuser %}
+    <div class="delete-scores-container">
+      <h2>Delete all your highscores?</h2>
+      <form method="POST" action="{% url 'high_scores_page' %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  {% endif %}
+
+
+  {% if messages %}
+    <ul class="message-list">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  
+  <div id="all-high-scores">
+    <h2>All High Scores</h2>
+    <ul>
+      {% for score in all_scores %}
+        <li>
+          <strong>User:</strong> {{ score.user.username }}<br>
+          <strong>Score:</strong> {{ score.score }}<br>
+          <strong>Date:</strong> {{ score.date_played|date:"F j, Y, g:i a" }}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  
+  {% if request.user.is_superuser %}
+    <div id="admin-delete-user-scores">
+      <h2>Admin Delete</h2>
+      <form method="POST" action="{% url 'high_scores_page' %}">
+        {% csrf_token %}
+        <label for="username_to_delete">Select User:</label>
+        <select name="username_to_delete" id="username_to_delete" required>
+          <option value="">--Select User--</option>
+          {% for user in all_users %}
+            <option value="{{ user.username }}">{{ user.username }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Delete User Scores</button>
+      </form>
+    </div>
+  {% endif %}
+
+
+  <div class="nav-links">
+    <a href="{% url 'login_page' %}" id="login-link">Logout</a>
+    <a href="{% url 'game_page' %}" id="game-link">Home</a>
+  </div>
+
+</body>
+</html>
